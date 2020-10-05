@@ -1,6 +1,6 @@
 <template>
     <div :class="'zakazList__item__component ' + zakaz.status">
-        <p class="number"><router-link to='/user/'><b>N {{ zakaz.id }}</b></router-link></p>
+        <p class="number"><router-link :to="{ name: 'user', params: { id: zakaz.id } }"><b>N {{ zakaz.id }}</b></router-link></p>
         <div class="user_data">
             <p class="user">
                 <span v-if="zakaz.lastname">{{ zakaz.lastname }} {{ zakaz.firstname }} {{ zakaz.middlename }}</span>

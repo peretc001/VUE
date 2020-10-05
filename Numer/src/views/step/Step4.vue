@@ -147,7 +147,7 @@ export default {
         console.log(sendData)
         this.print()
         setTimeout(() => {
-          axios.post('/thankyou.php', {
+          axios.post('/work/vue/numer/thankyou.php', {
             data: { all: sendData, img: this.output}
           }).then(function (response) {
             if (response.data.answer === 'good') {

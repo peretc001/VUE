@@ -1,0 +1,12 @@
+mixin navLink(class1, link, name)
+    li
+        a(class=class1,href=link)= name
+
+footer
+    .container
+        ul.menu
+            +navLink('', '#', 'Главная')
+            +navLink('', '#', 'О компании')
+            +navLink('work', '#', 'Портфолио')
+            +navLink('', '#', 'Контакты')
+                    

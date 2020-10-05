@@ -21,6 +21,9 @@ export default {
   .home {
     padding: 0 calc(50vw - 550px);
   }
+  .btn {
+    max-width: 250px;
+  }
   @media (max-width: 1199.98px){
     .home {
       padding: 0 calc(50vw - 460px);

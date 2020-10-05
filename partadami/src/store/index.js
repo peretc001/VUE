@@ -10,8 +10,10 @@ export default new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token') || '',
-    user : {}
+    user : {},
+    zakazItem: []
   },
+
   mutations: {
     auth_success(state, response){
       localStorage.setItem('token', response.token)
@@ -26,16 +28,23 @@ export default new Vuex.Store({
       localStorage.setItem('name', state.user.name)
       localStorage.setItem('isAuth', true)
     },
+
     auth_error(state){
         localStorage.removeItem('token')
         state.status = 'error'
     },
+
     logout(state){
         state.status = ''
         state.token = ''
         localStorage.removeItem('token')
+    },
+
+    setZakazItem(state, payload){
+      state.zakazItem = payload
     }
   },
+
   actions: {
     Login({commit}, user){
       return new Promise((resolve, reject) => {
@@ -53,6 +62,7 @@ export default new Vuex.Store({
         })
       })
     },
+
     Logout({commit}) {
       return new Promise((resolve, reject) => {
         commit('logout')
@@ -60,6 +70,7 @@ export default new Vuex.Store({
         resolve()
       })
     },
+
     getUserList(context, token) {
       return new Promise((resolve, reject) => {
         axios.post('https://www.partadami.ru/api/getUserList.php', { data: token }, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
@@ -71,11 +82,12 @@ export default new Vuex.Store({
         })
       })
     },
-    getZakazItem(context, id) {
+
+    zakazItem(context, id) {
       return new Promise((resolve, reject) => {
         axios.get('https://www.partadami.ru/api/getZakazItem.php?id=' + id, { headers: {'Content-Type': 'application/json'} })
         .then(resp => {
-          resolve(resp.data)
+          commit('setZakazItem', resp.data)
         })
         .catch(err => {
           reject(err)
@@ -83,6 +95,7 @@ export default new Vuex.Store({
       })
     }
   },
+
   getters: {
     getUser: state => {
       const login = localStorage.getItem('login')
@@ -93,8 +106,13 @@ export default new Vuex.Store({
       }
       return data
     },
+
     isAuth: state => {
       return localStorage.getItem('isAuth')
+    },
+
+    getZakazItem: state => {
+      return state.zakazItem
     }
   },
   modules: {
